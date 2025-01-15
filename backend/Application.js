@@ -37,12 +37,21 @@ module.exports = class Application{
     Start(){
         this.db.Start();
 
-        this.app.use((ctx, next) => {
+        /*this.app.use((ctx, next) => {
             ctx.set("Access-Control-Allow-Origin", "*");
             ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             ctx.db = this.db;
             return next();
-        })
+        })*/
+        
+        this.app.use(cors({
+          origin: process.env.REACT_APP_API_URL,
+          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+          allowHeaders: ['Content-Type', 'Authorization', 'X-Content-Type-Options', 'Accept', 'X-Requested-With', 'Origin', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
+          credentials: true,
+          maxAge: 7200,
+          privateNetworkAccess: true,
+        }));
 
         this.Route();
         this.Listen();
