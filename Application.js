@@ -34,7 +34,7 @@ module.exports = class Application{
 
         this.app.use(async (ctx, next) => {
           if (ctx.method === 'OPTIONS') {
-            ctx.set('Access-Control-Allow-Origin', 'https://lmsoho.onrender.com');
+            ctx.set('Access-Control-Allow-Origin', process.env.REACT_APP_API_URL);
             ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
             ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
             ctx.set('Access-Control-Allow-Credentials', 'true');
