@@ -25,6 +25,7 @@ module.exports = class Database {
         try {
             this.DB = await mongoose.connect(this.MONGOSTRING);
             this.Connected = true;
+            console.log("Database connected");
         } catch (error) {
             console.log(error);
             this.Connected = false;
