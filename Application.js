@@ -31,6 +31,19 @@ module.exports = class Application{
           maxAge: 7200,
           privateNetworkAccess: true,
         }));
+
+        app.use(async (ctx, next) => {
+          if (ctx.method === 'OPTIONS') {
+            ctx.set('Access-Control-Allow-Origin', 'https://lmsoho.onrender.com');
+            ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+            ctx.set('Access-Control-Allow-Credentials', 'true');
+            ctx.status = 204; // No Content
+            return;
+          }
+          await next();
+        });
+
 /*
         this.app.use(async (ctx, next) => {
           if (ctx.method === 'OPTIONS') {
