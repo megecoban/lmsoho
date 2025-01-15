@@ -63,6 +63,9 @@ module.exports = {
          */
         const db = ctx.db;
 
+        console.log("db debug:", db);
+        console.log("dbmodels debug:", db.Models);
+        
         let User = db.Models["User"];
 
         let newUser = new User({
