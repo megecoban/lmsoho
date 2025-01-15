@@ -112,6 +112,12 @@ module.exports = {
          */
         const db = ctx.db;
 
+
+        console.log("ctx: ",ctx);
+        console.log("ctx db: ",ctx.db);
+        console.log("ctx req: ",ctx.request);
+        console.log("ctx req bod: ",ctx.request.body);
+        
         const { Username, Password } = ctx.request.body;
 
         if (!Username || !Password) {
