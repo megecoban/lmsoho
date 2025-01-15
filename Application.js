@@ -64,7 +64,8 @@ module.exports = class Application{
     }
 
     Start(){
-        this.db.Start();
+        await this.db.Start();
+        console.log("Veritabanı ve modeller yüklendi.");
 
         this.app.use(cors({
           origin: process.env.REACT_APP_API_URL,
