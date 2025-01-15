@@ -21,6 +21,14 @@ module.exports = class Application{
         this.port = 9090;
 
         this.app.use(this.parser);
+        
+        this.app.use((ctx, next) => {
+            ctx.set("Access-Control-Allow-Origin", "*");
+            ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            ctx.db = this.db;
+            return next();
+        })
+        
         this.app.use(cors());
 
         this.staticPath = path.join(__dirname, 'dist');
