@@ -24,10 +24,22 @@ module.exports = class Application{
 
         
         this.app.use(cors({
-          origin: process.env.REACT_APP_API_URL, // Belirli bir kaynak
-          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Desteklenen yöntemler
-          credentials: true, // Eğer kimlik doğrulama bilgileri gönderiliyorsa
+          origin: process.env.REACT_APP_API_URL,
+          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+          allowHeaders: ['Content-Type', 'Authorization'],
+          credentials: true,
         }));
+
+        app.use(async (ctx, next) => {
+          if (ctx.method === 'OPTIONS') {
+            ctx.set('Access-Control-Allow-Origin', process.env.REACT_APP_API_URL);
+            ctx.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+            ctx.set('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+            ctx.set('Access-Control-Allow-Credentials', 'true');
+            return;
+          }
+          await next();
+        });
 
         this.staticPath = path.join(__dirname, 'dist');
         this.app.use(serve(this.staticPath));
