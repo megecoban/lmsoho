@@ -26,8 +26,10 @@ module.exports = class Application{
         this.app.use(cors({
           origin: process.env.REACT_APP_API_URL,
           allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-          allowHeaders: ['Content-Type', 'Authorization'],
+          allowHeaders: ['Content-Type', 'Authorization', 'X-Content-Type-Options', 'Accept', 'X-Requested-With', 'Origin', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
           credentials: true,
+          maxAge: 7200,
+          privateNetworkAccess: true,
         }));
 
         this.app.use(async (ctx, next) => {
