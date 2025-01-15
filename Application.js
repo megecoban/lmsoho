@@ -63,7 +63,7 @@ module.exports = class Application{
         });
     }
 
-    Start(){
+    async Start(){
         await this.db.Start();
         console.log("Veritabanı ve modeller yüklendi.");
 
