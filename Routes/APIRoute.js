@@ -122,6 +122,9 @@ module.exports = {
             }
         }
 
+        console.log("Debug db: ",db);
+        console.log("Debug models:",db.Models["User"]);
+        
         let user = db.Models["User"];
 
         const data = await user.findOne({ Username: Username });
