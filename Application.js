@@ -31,7 +31,7 @@ module.exports = class Application{
           maxAge: 7200,
           privateNetworkAccess: true,
         }));
-
+/*
         this.app.use(async (ctx, next) => {
           if (ctx.method === 'OPTIONS') {
             ctx.set('Access-Control-Allow-Origin', process.env.REACT_APP_API_URL);
@@ -41,7 +41,7 @@ module.exports = class Application{
             return;
           }
           await next();
-        });
+        });*/
 
         this.staticPath = path.join(__dirname, 'dist');
         this.app.use(serve(this.staticPath));
@@ -63,6 +63,16 @@ module.exports = class Application{
 
     Start(){
         this.db.Start();
+
+        this.app.use(cors({
+          origin: process.env.REACT_APP_API_URL,
+          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+          allowHeaders: ['Content-Type', 'Authorization', 'X-Content-Type-Options', 'Accept', 'X-Requested-With', 'Origin', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
+          credentials: true,
+          maxAge: 7200,
+          privateNetworkAccess: true,
+        }));
+        
 /*
         this.app.use((ctx, next) => {
             ctx.set("Access-Control-Allow-Origin", "*");
