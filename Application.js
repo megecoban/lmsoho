@@ -30,7 +30,7 @@ module.exports = class Application{
           credentials: true,
         }));
 
-        app.use(async (ctx, next) => {
+        this.app.use(async (ctx, next) => {
           if (ctx.method === 'OPTIONS') {
             ctx.set('Access-Control-Allow-Origin', process.env.REACT_APP_API_URL);
             ctx.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
