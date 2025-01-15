@@ -16,6 +16,7 @@ module.exports = class Application{
         this.app = new Koa();
         this.parser = new BodyParser();
         const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/defaultDB";
+        console.log("Debug mongo ",MONGODB_URI)
         this.db = new Database(MONGODB_URI);
 
         this.port = 9090;
