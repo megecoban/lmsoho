@@ -44,18 +44,6 @@ module.exports = class Application{
           await next();
         });
 
-/*
-        this.app.use(async (ctx, next) => {
-          if (ctx.method === 'OPTIONS') {
-            ctx.set('Access-Control-Allow-Origin', process.env.REACT_APP_API_URL);
-            ctx.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-            ctx.set('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-            ctx.set('Access-Control-Allow-Credentials', 'true');
-            return;
-          }
-          await next();
-        });*/
-
         this.staticPath = path.join(__dirname, 'dist');
         this.app.use(serve(this.staticPath));
 
@@ -86,14 +74,6 @@ module.exports = class Application{
           privateNetworkAccess: true,
         }));
         
-/*
-        this.app.use((ctx, next) => {
-            ctx.set("Access-Control-Allow-Origin", "*");
-            ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            ctx.db = this.db;
-            return next();
-        })
-*/
         this.Route();
         this.Listen();
     }
@@ -179,13 +159,17 @@ module.exports = class Application{
         this.app.use(async (ctx) => {
             const indexPath = path.join(this.staticPath, 'index.html');
             console.log(indexPath);
-            try {
-              ctx.body = fs.createReadStream(indexPath);
-            } catch (err) {
+            const stream = fs.createReadStream(indexPath);
+        
+            // Hata dinlemesi
+            stream.on('error', (err) => {
                 console.log(err);
-              ctx.status = 404;
-              ctx.body = '404 Not Found';
-            }
+                ctx.status = 404;
+                ctx.body = '404 Not Found';
+            });
+        
+            // Eğer hata yoksa stream'i gönder
+            ctx.body = stream;
         });
           
     }
