@@ -32,7 +32,7 @@ module.exports = class Application{
           privateNetworkAccess: true,
         }));
 
-        app.use(async (ctx, next) => {
+        this.app.use(async (ctx, next) => {
           if (ctx.method === 'OPTIONS') {
             ctx.set('Access-Control-Allow-Origin', 'https://lmsoho.onrender.com');
             ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
