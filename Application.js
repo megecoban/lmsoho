@@ -21,16 +21,12 @@ module.exports = class Application{
         this.port = 9090;
 
         this.app.use(this.parser);
-        /*
-        this.app.use((ctx, next) => {
-            ctx.set("Access-Control-Allow-Origin", "*");
-            ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            ctx.db = this.db;
-            return next();
-        })*/
+
         
         this.app.use(cors({
-          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'],
+          origin: process.env.REACT_APP_API_URL, // Belirli bir kaynak
+          allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Desteklenen yöntemler
+          credentials: true, // Eğer kimlik doğrulama bilgileri gönderiliyorsa
         }));
 
         this.staticPath = path.join(__dirname, 'dist');
