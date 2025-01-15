@@ -25,8 +25,9 @@ module.exports = class Database {
         try {
             this.DB = await mongoose.connect(this.MONGOSTRING);
             this.Connected = true;
+            console.log("Veritabanına bağlanıldı.");
         } catch (error) {
-            console.log(error);
+            console.log("Bağlantı hatası:", error);
             this.Connected = false;
         }
         return this.Connected;
@@ -38,8 +39,9 @@ module.exports = class Database {
     }
 
     async LoadModels(){
+        console.log("Modeller yükleniyor...");
         this.Models = {};
-        
+    
         let UserS = require("./User.Schema");
         let CourseS = require("./Course.Schema");
         let UsersCoursesS = require("./UsersCourses.Schema");
@@ -47,7 +49,7 @@ module.exports = class Database {
         let SubscriptionS = require("./Subscription.Schema");
         let LessonS = require("./Lesson.Schema");
         let CategoryS = require("./Category.Schema");
-
+    
         this.Models[UserS.Name] = mongoose.model(UserS.Name, UserS.Schema);
         this.Models[CourseS.Name] = mongoose.model(CourseS.Name, CourseS.Schema);
         this.Models[UsersCoursesS.Name] = mongoose.model(UsersCoursesS.Name, UsersCoursesS.Schema);
@@ -55,7 +57,8 @@ module.exports = class Database {
         this.Models[SubscriptionS.Name] = mongoose.model(SubscriptionS.Name, SubscriptionS.Schema);
         this.Models[LessonS.Name] = mongoose.model(LessonS.Name, LessonS.Schema);
         this.Models[CategoryS.Name] = mongoose.model(CategoryS.Name, CategoryS.Schema);
-    
+        
+        console.log("Modeller başarıyla yüklendi.");
         this.StartUp();
     }
 
