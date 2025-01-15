@@ -155,7 +155,27 @@ module.exports = class Application{
         this.APIRouter.get("/auth/getprofile", (ctx) => APIRoute.GetUserInfo(ctx));
         this.APIRouter.put("/auth/profile", (ctx) => APIRoute.ModifyUser(ctx));
         // Kullanıcı
+
+        this.app.use(async (ctx, next) => {
+            if (ctx.method === 'GET' && ctx.path !== '/api') {
+                const indexPath = path.join(this.staticPath, 'index.html');
+                console.log(indexPath);
         
+                const stream = fs.createReadStream(indexPath);
+        
+                stream.on('error', (err) => {
+                    console.log(err);
+                    ctx.status = 404;
+                    ctx.body = '404 Not Found';
+                });
+        
+                ctx.body = stream;
+            } else {
+                await next();
+            }
+        });
+        
+        /*
         this.app.use(async (ctx) => {
             const indexPath = path.join(this.staticPath, 'index.html');
             console.log(indexPath);
@@ -170,7 +190,7 @@ module.exports = class Application{
         
             // Eğer hata yoksa stream'i gönder
             ctx.body = stream;
-        });
+        });*/
           
     }
 
